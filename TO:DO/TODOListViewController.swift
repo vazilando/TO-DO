@@ -10,7 +10,9 @@ import UIKit
 
 class TODOListViewController: UITableViewController {
     
-    let itemArray = ["Find Mike", "Buy Eggos", "Defeat Demigorgon"]
+    
+    
+    var itemArray = ["Find Mike", "Buy Eggos", "Defeat Demigorgon"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,8 @@ class TODOListViewController: UITableViewController {
         
     }
     
+    //MARK - TableView Delegate Methods
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(itemArray[indexPath.row])
         
@@ -50,6 +54,44 @@ class TODOListViewController: UITableViewController {
     }
     
     
+    //MARK - Add New Items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add new TO:DO item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default)  { (action) in
+            
+            if textField.text == "" {
+                print("No text")
+            } else {
+                self.itemArray.append(textField.text!)
+                self.tableView.reloadData()
+            }
+            
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .default) { (cancel) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        
+        
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        
+        alert.addAction(action)
+        alert.addAction(cancel)
+        
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
     
 
 
